@@ -8,38 +8,57 @@ from spade.template import Template
 class SenderAgent(Agent):
     class InformBehav(PeriodicBehaviour):
         async def run(self):
-            print("InformBehav running")
+            print("SEND: InformBehav running")
+            sendTry = 1
             msg = Message(to="sportgen@404.city")     # Instantiate the message
             msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
             msg.body = "Hello World"                    # Set the message content
 
-            await self.send(msg)
-            print("Message sent!")
+            while (sendTry <= 3):
+                await self.send(msg)
+                print("SEND: Message sent!")
 
+                response = await self.receive(timeout=10) #TODO: consider changing timeout
+                if response:
+                    print("SEND: Receiver response: {}".format(response.body))
+                    #TODO: consider if (response.body == "OK") maybe?
+                    sendTry = 1
+                    break
+                else:
+                    if (sendTry == 3):
+                        print("SEND: Receiver is dead, taking its duties.")
+                        #TODO: making receiver
+                        break
+                    sendTry = sendTry + 1
+                    print("SEND: Confirmation missing, trying again ({}/3)".format(sendTry))
             # stop agent from behaviour
             # await self.agent.stop()
 
     async def setup(self):
-        print("SenderAgent started")
+        print("SEND: SenderAgent started")
         b = self.InformBehav(period=5)
         self.add_behaviour(b)
 
 class ReceiverAgent(Agent):
     class RecvBehav(CyclicBehaviour):
         async def run(self):
-            print("RecvBehav running")
+            print("RECV: RecvBehav running")
 
             msg = await self.receive(timeout=10) # wait for a message for 10 seconds
             if msg:
-                print("Message received with content: {}".format(msg.body))
+                print("RECV: Message received with content: {}".format(msg.body))
+                response = Message(to=str(msg.sender))
+                response.set_metadata("performative", "inform")
+                response.body = "OK"
+                await self.send(response)
             else:
-                print("Did not received any message after 10 seconds")
+                print("RECV: Did not received any message after 10 seconds")
 
             # stop agent from behaviour
             # await self.agent.stop()
 
     async def setup(self):
-        print("ReceiverAgent started")
+        print("RECV: ReceiverAgent started")
         b = self.RecvBehav()
         template = Template()
         template.set_metadata("performative", "inform")
