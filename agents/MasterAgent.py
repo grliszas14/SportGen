@@ -9,15 +9,14 @@ import spade.trace
 class MasterAgent(Agent):
     class RecvBehav(CyclicBehaviour):
         async def run(self):
-            print("RECV: RecvBehav running")
-
-            msg = await self.receive(timeout=10) # wait for a message for 10 seconds
+			#print("RECV: RecvBehav running")
+            msg = await self.receive(timeout=15) # wait for a message for 10 seconds
             if msg:
-                print("RECV: Message received with content: {}".format(msg.body))
-                response = Message(to=str(msg.sender))
-                response.set_metadata("performative", "inform")
-                response.body = "OK"
-                await self.send(response)
+                print("{}".format(msg.body))
+                #response = Message(to=str(msg.sender))
+                #response.set_metadata("performative", "inform")
+                #response.body = "OK"
+                #await self.send(response)
             else:
                 print("RECV: Did not received any message after 10 seconds")
 
@@ -25,7 +24,7 @@ class MasterAgent(Agent):
             # await self.agent.stop()
 
     async def setup(self):
-        print("RECV: ReceiverAgent started")
+        #print("RECV: ReceiverAgent started")
         b = self.RecvBehav()
         template = Template()
         template.set_metadata("performative", "inform")

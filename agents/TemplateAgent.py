@@ -17,17 +17,11 @@ class TemplateAgent(Agent):
             d2l = Data2Language()
             message = ''
             response = await self.receive(timeout=60)
-            print("SEND: Got message from inserter")
             # parse message
             team, player, minute, action, action_type = response.body.split(',')
-            print(team)
-            print(player)
-            print(minute)
-            print(action)
-            print(action_type)
             try:
                 message = d2l.apply_template(team, player, minute, action, action_type)
-                print(message)
+                #print(message)
             except:
                 print('Cannot make sentence')
             msg = Message(to="sportgen@404.city")       # Instantiate the message
@@ -38,6 +32,6 @@ class TemplateAgent(Agent):
 
 
     async def setup(self):
-        print("SEND: SenderAgent started")
+        #print("SEND: SenderAgent started")
         b = self.InformBehav(period=5)
         self.add_behaviour(b)
