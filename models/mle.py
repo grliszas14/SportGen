@@ -32,7 +32,7 @@ words = list(itertools.chain.from_iterable(words))
 language_model = MLE(2)
 language_model.fit(sentences, vocabulary_text=Vocabulary(words))
 
-a = language_model.generate(num_words=3, text_seed='Rooney')
+a = language_model.generate(num_words=1, text_seed='Manchester')
 
 print(a)
 
