@@ -10,6 +10,8 @@ class Data2Language:
         self.player_stats = pd.read_csv('../dataset/players.csv', sep=';')
         self.action_dictionaries = {
             'goal': ['scores', 'hits'],
+			'save': ['saves', 'defends'],
+			'faul': ['gets'],
             'penalty': ['gets', 'receives', 'is shown', 'is punished with'],
             'substitution': ['leaves the game', 'leaves', 'walks off the pitch', 'is substituted'],
             'injury': ['is injured', 'gets hurt', 'gets injured']
