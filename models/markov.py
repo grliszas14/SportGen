@@ -3,6 +3,7 @@ import glob
 import os
 from textblob import TextBlob
 from itertools import chain
+import string
 
 
 class Markov:
@@ -15,7 +16,8 @@ class Markov:
         contents = []
         for filename in all_files:
             path = open(filename, "r+")
-            article = TextBlob(''.join(path.read()).replace("\n", " "))
+            article = TextBlob(
+                ''.join(path.read()).replace("\n", " ").translate(str.maketrans('', '', string.punctuation)))
             contents.append(str(article))
         contents = ''.join(chain.from_iterable(contents))
         return contents
@@ -61,4 +63,4 @@ class Markov:
 
 if __name__ == '__main__':
     markov = Markov()
-    print(markov.generate('Rooney', 3))
+    print(markov.generate('Manchester', 3))
