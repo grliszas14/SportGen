@@ -11,9 +11,6 @@ sys.path.insert(0, '../models')
 from data2language import Data2Language
 
 class TemplateAgent(Agent):
-    class MakeSentenceBehav(OneShotBehaviour):
-        async def run(self):
-            print('SIEMA')
 
     class InformBehav(PeriodicBehaviour):
         async def run(self):
@@ -35,7 +32,7 @@ class TemplateAgent(Agent):
                 print('Cannot make sentence')
             msg = Message(to="sportgen@404.city")       # Instantiate the message
             msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
-            msg.body = str(message)                              # Set the message content
+            msg.body = str(message)						# Set the message content
 
             await self.send(msg)
 
@@ -44,10 +41,3 @@ class TemplateAgent(Agent):
         print("SEND: SenderAgent started")
         b = self.InformBehav(period=5)
         self.add_behaviour(b)
-        #TODO: making receiver
-        #c = self.MakeSentenceBehav()
-        #templateS = Template()
-        #templateS.thread = "None"
-        #templateS.metadata={}
-        #templateS.sender="sportgen3@404.city"
-        #self.add_behaviour(c, templateS)
