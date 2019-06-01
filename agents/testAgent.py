@@ -17,7 +17,7 @@ class SenderAgent(Agent):
             #contacts = self.presence.get_contacts() #- check other agents
             #print(contacts)
 
-            while (True):
+            while (sendTry <= 3):
                 await self.send(msg)
                 print(msg.body)
                 print("SEND: Message sent!")
