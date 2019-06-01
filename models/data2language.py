@@ -15,6 +15,9 @@ class Data2Language:
             'injury': ['is injured', 'gets hurt', 'gets injured']
         }
         self.vowels = 'a', 'o', 'e', 'i', 'u'
+        self.trivia_starter = ["Did you know?", "It is interesting that", "Trivia:", ""]
+        self.player_features = ["Age", "Club", "Overall", "Value", "Wage", "Preferred Foot",
+                                "Contract Valid Until", "Height", "Weight", "Release Clause"]
 
     def get_article(self, word):
         return 'an' if Word(word).startswith(self.vowels) else 'a'
@@ -50,12 +53,23 @@ class Data2Language:
         template = Tree('', [Tree('NP', [self.express_player(team, player)]), Tree('VP', [
             Tree('VP', [self.express_action(action, action_type)]),
             Tree('PP', [self.express_time(minute)])])])
-        return template.flatten()
+        return template.flatten().pformat().lstrip('(').rstrip(')')
+
+    def generate_trivia(self, player, team):
+        player_data = self.player_stats[(self.player_stats["Name"].str.contains(player, case=False)) & (
+            self.player_stats["Club"].str.contains(team, case=False))]
+        feature_name = random.choice(self.player_features)
+        feature = player_data[feature_name].to_string(header=False, index=False).strip()
+        template = Tree('', [Tree('NP', [Tree('N', [f"{player}'s"]), Tree('N', [feature_name.lower()])]),
+                             Tree('VP', [Tree('V', ['is']), Tree('NP', [Tree('NP', [feature])])])]).flatten()
+        return f"{random.choice(self.trivia_starter)} {template.pformat().lstrip('(').rstrip(')')}"
 
 
 if __name__ == '__main__':
     d2l = Data2Language()
-    print(d2l.apply_template(team='Bayern', player='Lewandowski', minute=38, action='goal', action_type='penalty kick'))
+    print(d2l.apply_template(team='Bayern', player='Lewandowski', minute=38, action='goal',
+                             action_type='penalty kick'))
     print(d2l.apply_template(team='United', player='Pogba', minute=10, action='penalty', action_type='yellow card'))
     print(d2l.apply_template(team='Barcelona', player='Messi', minute=89, action='substitution', action_type=None))
     print(d2l.apply_template(team='Real', player='Bale', minute=73, action='injury', action_type=None))
+    print(d2l.generate_trivia(player="Lewandowski", team="Bayern"))
