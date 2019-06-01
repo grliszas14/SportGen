@@ -10,6 +10,7 @@ class Markov:
 
     def __init__(self):
         self.text = self.read_data('../dataset/bbcsport/football')
+        self.text += self.read_data('../dataset/bnc')
 
     def read_data(self, path):
         all_files = glob.glob(os.path.join(path, "*.txt"))
@@ -63,4 +64,4 @@ class Markov:
 
 if __name__ == '__main__':
     markov = Markov()
-    print(markov.generate('Manchester', 3))
+    print(markov.generate('goal', 1))
