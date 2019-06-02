@@ -1,0 +1,4 @@
+Liverpool,Salah,6,injury,
+Real Madryt,Kroos,13,penalty,wagging with finger
+Liverpool,Salah,29,substitution,
+Real Madryt,Benzema,51,goal,
