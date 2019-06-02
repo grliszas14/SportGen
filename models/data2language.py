@@ -9,21 +9,22 @@ class Data2Language:
     def __init__(self):
         self.player_stats = pd.read_csv('../dataset/players.csv', sep=';')
         self.action_dictionaries = {
-            'goal': ['scores', 'hits'],
+            'goal': ['scores', 'hits', 'puts ball in the net!'],
 			'save': ['save', 'defend'],
 			'faul': ['gets'],
+            'miss': ['misses shot', 'inaccurate shot', 'misses', 'tried to put the ball in the net, abortively', 'didn\'t make it, ball out of the pitch'],
             'penalty': ['gets', 'receives', 'is shown', 'is punished with'],
             'substitution': ['leaves the game', 'leaves playing field', 'walks off the pitch', 'is substituted'],
             'injury': ['is injured', 'gets hurt', 'gets injured'],
             'pick': ['picks up the ball', 'taking over the ball'],
             'pass': ['gets upright pass', 'gets serving on the curb'],
-            'loss': ['did not stay on the ball for a long time', 'quickly losses the ball', 'stopped by an opponent']
+            'loss': ['did not stay on the ball for a long time', 'quickly losses the ball', 'stopped by an opponent', 'fatal mistake']
         }
         self.vowels = 'a', 'o', 'e', 'i', 'u'
         self.trivia_starter = ["Did you know?", "It is interesting that", "Trivia:", ""]
         self.player_features = ["Age", "Club", "Overall", "Value", "Wage", "Preferred Foot",
                                 "Contract Valid Until", "Height", "Weight", "Release Clause"]
-        self.good_adjectives = ["beautiful", "wonderful", "awesome", "terrific", "fantastic", "perfect"]
+        self.good_adjectives = ["beautiful", "wonderful", "awesome", "terrific", "fantastic", "perfect", "effective"]
         self.shot_adjectives = ["powerful", "strong", "terrific", "beautiful", "tremendous", "mighty", "what a", "precise", "unbelievable"]
         self.bad_adjectives = ["terrible", "bad", "desperate", "hopeless", "poor", "weak"]
 
@@ -99,6 +100,7 @@ if __name__ == '__main__':
                              action_type='penalty kick'))
     print(d2l.apply_template(team='United', player='Pogba', minute=10, action='penalty', action_type='yellow card'))
     print(d2l.apply_template(team='Real', player='Kroos', minute=15, action='pick', action_type=None))
+    print(d2l.apply_template(team='Barcelona', player='Messi', minute=18, action='miss', action_type=None))
     print(d2l.apply_template(team='Barcelona', player='Messi', minute=22, action='substitution', action_type=None))
     print(d2l.apply_template(team='Barcelona', player='Coutinho', minute=28, action='loss', action_type=None))
     print(d2l.apply_template(team='Real', player='Bale', minute=73, action='injury', action_type=None))
