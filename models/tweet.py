@@ -7,9 +7,9 @@ import pandas as pd
 
 class Tweet:
 
-    def __init__(self, path):
+    def __init__(self, path, k=0):
         self.sentences = self.load_data(path)
-        self.model = self.fit()
+        self.model = self.fit(k)
 
     def load_data(self, path):
         df = pd.read_csv(path, sep=";")
@@ -18,7 +18,7 @@ class Tweet:
             sentences.append([str(word) for word in TextBlob(tweet[0]).words])
         return sentences
 
-    def fit(self):
+    def fit(self, k):
         model = defaultdict(lambda: defaultdict(lambda: 0))
         for sentence in self.sentences:
             for w1, w2, w3 in trigrams(sentence, pad_right=True, pad_left=True):
@@ -26,8 +26,9 @@ class Tweet:
 
         for w1_w2 in model:
             total_count = float(sum(model[w1_w2].values()))
+            occurences = len(model[w1_w2])
             for w3 in model[w1_w2]:
-                model[w1_w2][w3] /= total_count
+                model[w1_w2][w3] = (model[w1_w2][w3] + k) / (total_count + k * occurences)
         return model
 
     def generate(self):
@@ -50,7 +51,8 @@ class Tweet:
 
 
 if __name__ == '__main__':
-    tweet = Tweet("../dataset/tweets_processed.csv")
+    # tweet = Tweet("../dataset/tweets_processed.csv")
+    tweet = Tweet("../dataset/tweets_processed.csv", k=2)
     print(tweet.generate())
     print(tweet.generate())
     print(tweet.generate())
