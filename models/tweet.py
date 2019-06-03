@@ -31,8 +31,8 @@ class Tweet:
                 model[w1_w2][w3] = (model[w1_w2][w3] + k) / (total_count + k * occurences)
         return model
 
-    def generate(self):
-        text = [None, None]
+    def generate(self, context=None):
+        text = [None, context]
         prob = 1.0
         sentence_finished = False
 
@@ -53,8 +53,8 @@ class Tweet:
 if __name__ == '__main__':
     # tweet = Tweet("../dataset/tweets_processed.csv")
     tweet = Tweet("../dataset/tweets_processed.csv", k=2)
-    print(tweet.generate())
-    print(tweet.generate())
-    print(tweet.generate())
-    print(tweet.generate())
-    print(tweet.generate())
+    print(tweet.generate(context='goal'))
+    print(tweet.generate(context='champion'))
+    print(tweet.generate(context='Zlatan'))
+    print(tweet.generate(context='Russia'))
+    print(tweet.generate(context='penalty'))
