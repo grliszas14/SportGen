@@ -1,11 +1,7 @@
 from collections import defaultdict
 from textblob import TextBlob
 from nltk.util import trigrams
-from nltk.corpus import brown
-import os
-import glob
 from random import random
-from itertools import chain
 import pandas as pd
 
 
@@ -20,7 +16,7 @@ class Tweet:
         sentences = []
         for tweet in df.values:
             sentences.append([str(word) for word in TextBlob(tweet[0]).words])
-        return list(chain.from_iterable(sentences))
+        return sentences
 
     def fit(self):
         model = defaultdict(lambda: defaultdict(lambda: 0))
