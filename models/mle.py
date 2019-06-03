@@ -30,9 +30,9 @@ words = list(itertools.chain.from_iterable(words))
 # vocabulary = Vocabulary(words)
 
 language_model = MLE(2)
-language_model.fit(sentences, vocabulary_text=Vocabulary(words))
+language_model.fit(sentences, vocabulary_text=words)
 
-a = language_model.generate(num_words=1, text_seed='Manchester')
+a = language_model.generate(num_words=1, text_seed='The')
 
 print(a)
 
