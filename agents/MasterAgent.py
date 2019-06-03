@@ -23,10 +23,18 @@ class MasterAgent(Agent):
             # stop agent from behaviour
             # await self.agent.stop()
 
+    class HelloChecker(OneShotBehaviour):
+        async def run(self):
+            msg = Message(to="sportgenChecker@404.city")  # Instantiate the message
+            msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
+            msg.body = "hello"  # Set the message content
+            await self.send(msg)
+
 
 
     async def setup(self):
         print("MAST: MasterAgent started")
+        self.add_behaviour(self.HelloChecker())
         b = self.RecvBehav()
         template = Template()
         template.set_metadata("performative", "inform")

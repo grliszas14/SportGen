@@ -16,6 +16,10 @@ if __name__ == "__main__":
     senderList = ["sportgen2@404.city", "sportgen3@404.city",
                   "sportgen4@404.city"]
 
+    checkerAgent = CheckerAgent("sportgenchecker@404.city", "dupaelka101")
+    futureChecker = checkerAgent.start()
+    futureChecker.result()
+    checkerAgent.web.start(hostname="127.0.0.1", port="10005")
 
     masterAgent = MasterAgent("sportgen@404.city", "dupaelka101")
     future = masterAgent.start()
@@ -32,11 +36,7 @@ if __name__ == "__main__":
     future3.result()
     insertAgent.web.start(hostname="127.0.0.1", port="10002")
 
-    checkerAgent = CheckerAgent("sportgenchecker@404.city", "dupaelka101")
-    futureChecker = checkerAgent.start()
-    futureChecker.result()
-    CheckerAgent.getJids(checkerAgent, [masterAgent.jid, templateAgent.jid, insertAgent.jid])
-    checkerAgent.web.start(hostname="127.0.0.1", port="10005")
+    #CheckerAgent.getJids(checkerAgent, [masterAgent.jid, templateAgent.jid, insertAgent.jid])
 
     #senderagent4 = SenderAgent("sportgen4@404.city", "dupaelka101")
     #senderagent4.start()

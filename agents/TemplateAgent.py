@@ -30,9 +30,17 @@ class TemplateAgent(Agent):
 
             await self.send(msg)
 
+    class HelloChecker(OneShotBehaviour):
+        async def run(self):
+            msg = Message(to="sportgenChecker@404.city")  # Instantiate the message
+            msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
+            msg.body = "hello"  # Set the message content
+            await self.send(msg)
+
 
     async def setup(self):
         print("TEMP: TemplateAgent started")
+        self.add_behaviour(self.HelloChecker())
         b = self.InformBehav(period=5)
         self.add_behaviour(b)
 
