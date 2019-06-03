@@ -43,8 +43,8 @@ class Trigram:
                 model[w1_w2][w3] = (model[w1_w2][w3] + k) / (total_count + k * occurences)
         return model
 
-    def generate(self, context=None):
-        text = [None, context]
+    def generate(self):
+        text = [None, None]
         prob = 1.0
         sentence_finished = False
 
