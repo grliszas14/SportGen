@@ -62,16 +62,12 @@ class CheckerAgent(Agent):
             await masterAgent.start()
             masterAgent.web.start(hostname="127.0.0.1", port="10000")
 
-
-
-
     class SendBehav3(OneShotBehaviour):
         async def run(self):
             self.agent.replacer = 2
             masterAgent = MasterAgent("sportgen2@404.city", "dupaelka101")
             await masterAgent.start()
             masterAgent.web.start(hostname="127.0.0.1", port="10000")
-
 
     class MasterBehav(OneShotBehaviour):
         async def run(self):
@@ -100,7 +96,6 @@ class CheckerAgent(Agent):
                     print(self.agent.jids)
             else:
                 print("no new JIDs")
-
 
     async def setup(self):
         print("CHECK: CheckerAgent started")
