@@ -16,7 +16,6 @@ class MasterAgent(Agent):
                 response.set_metadata("performative", "inform")
                 response.body = "OK"
                 #await self.send(response)
-                print(msg.body)
             else:
                 print("MAST: Did not received any message after 10 seconds")
 
