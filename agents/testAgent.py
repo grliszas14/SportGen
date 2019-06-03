@@ -43,25 +43,4 @@ if __name__ == "__main__":
 
     i = 1
 
-    while masterAgent.is_alive():
-        try:
-            time.sleep(1)
-            # recv dead simulation
-            #if i < 10:
-            #    time.sleep(1)
-            #    i = i + 1
-            #elif i == 10:
-            #    print('Killing receiver')
-            #    receiveragent.stop()
-            #    print('Receiver killed')
-            #    i = i + 1
-            #else:
-            #    time.sleep(1)
-        except KeyboardInterrupt:
-            templateAgent.stop()
-            insertAgent.stop()
-            #senderagent4.stop()
-            masterAgent.stop()
-            checkerAgent.stop()
-            break
-    print("Agents finished")
+

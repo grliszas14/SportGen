@@ -15,10 +15,10 @@ class MasterAgent(Agent):
                 response = Message(to=str(msg.sender))
                 response.set_metadata("performative", "inform")
                 response.body = "OK"
-                await self.send(response)
+                #await self.send(response)
                 print(msg.body)
             else:
-                print("RECV: Did not received any message after 10 seconds")
+                print("MAST: Did not received any message after 10 seconds")
 
     class HelloChecker(OneShotBehaviour):
         async def run(self):

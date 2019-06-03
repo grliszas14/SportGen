@@ -35,7 +35,6 @@ class CheckerAgent(Agent):
                         self.agent.add_behaviour(self.agent.SendBehav3())
                         self.replacer = 2
                     else:
-                        raise Exception("nie ma dostępnych agentow!")
                         print("nie ma agentow")
 
         def on_subscribed(self, jid):
