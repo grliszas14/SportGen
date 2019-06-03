@@ -46,7 +46,6 @@ class Tweet:
                     break
             if text[-2:] == [None, None]:
                 sentence_finished = True
-        print(prob)
         return ' '.join([t for t in text if t])
 
 
