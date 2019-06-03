@@ -10,22 +10,25 @@ class Data2Language:
         self.player_stats = pd.read_csv('../dataset/players.csv', sep=';')
         self.action_dictionaries = {
             'goal': ['scores', 'hits', 'puts ball in the net!'],
-			'save': ['save', 'defend'],
-			'faul': ['gets'],
-            'miss': ['misses shot', 'inaccurate shot', 'misses', 'tried to put the ball in the net, abortively', 'didn\'t make it, ball out of the pitch'],
+            'save': ['save', 'defend'],
+            'faul': ['gets'],
+            'miss': ['misses shot', 'inaccurate shot', 'misses', 'tried to put the ball in the net, abortively',
+                     'didn\'t make it, ball out of the pitch'],
             'penalty': ['gets', 'receives', 'is shown', 'is punished with'],
             'substitution': ['leaves the game', 'leaves playing field', 'walks off the pitch', 'is substituted'],
             'injury': ['is injured', 'gets hurt', 'gets injured'],
             'pick': ['picks up the ball', 'taking over the ball'],
             'pass': ['gets upright pass', 'gets serving on the curb'],
-            'loss': ['did not stay on the ball for a long time', 'quickly losses the ball', 'stopped by an opponent', 'fatal mistake']
+            'loss': ['did not stay on the ball for a long time', 'quickly losses the ball', 'stopped by an opponent',
+                     'fatal mistake']
         }
         self.vowels = 'a', 'o', 'e', 'i', 'u'
         self.trivia_starter = ["Did you know?", "It is interesting that", "Trivia:", ""]
         self.player_features = ["Age", "Club", "Overall", "Value", "Wage", "Preferred Foot",
                                 "Contract Valid Until", "Height", "Weight", "Release Clause"]
         self.good_adjectives = ["beautiful", "wonderful", "awesome", "terrific", "fantastic", "perfect", "effective"]
-        self.shot_adjectives = ["powerful", "strong", "terrific", "beautiful", "tremendous", "mighty", "what a", "precise", "unbelievable"]
+        self.shot_adjectives = ["powerful", "strong", "terrific", "beautiful", "tremendous", "mighty", "what a",
+                                "precise", "unbelievable"]
         self.bad_adjectives = ["terrible", "bad", "desperate", "hopeless", "poor", "weak"]
 
     def get_article(self, word):
@@ -81,7 +84,7 @@ class Data2Language:
     def apply_template(self, team, player, minute, action, action_type):
         template = Tree('', [Tree('PP', [self.express_time(minute)]), Tree('NP', [
             Tree('NP', [self.express_player(team, player)]),
-            Tree('VP', [self.express_action(action,action_type)])])])
+            Tree('VP', [self.express_action(action, action_type)])])])
         return template.flatten().pformat().lstrip('(').rstrip(')')
 
     def generate_trivia(self, player, team):
