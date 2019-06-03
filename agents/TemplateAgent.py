@@ -32,6 +32,7 @@ class TemplateAgent(Agent):
 
 
     async def setup(self):
-        #print("SEND: SenderAgent started")
+        print("TEMP: TemplateAgent started")
         b = self.InformBehav(period=5)
         self.add_behaviour(b)
+

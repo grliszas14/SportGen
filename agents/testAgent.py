@@ -8,6 +8,7 @@ import spade.trace
 from MasterAgent import MasterAgent
 from TemplateAgent import TemplateAgent
 from InsertAgent import InsertAgent
+from CheckerAgent import CheckerAgent
 
 if __name__ == "__main__":
     # order in which ask senders to become receivers in case receiver
@@ -15,18 +16,27 @@ if __name__ == "__main__":
     senderList = ["sportgen2@404.city", "sportgen3@404.city",
                   "sportgen4@404.city"]
 
+
     masterAgent = MasterAgent("sportgen@404.city", "dupaelka101")
     future = masterAgent.start()
     future.result() # wait for receiver agent to be prepared.
     masterAgent.web.start(hostname="127.0.0.1", port="10000")
 
     templateAgent = TemplateAgent("sportgen2@404.city", "dupaelka101")
-    templateAgent.start()
+    future2 = templateAgent.start()
+    future2.result()
     templateAgent.web.start(hostname="127.0.0.1", port="10001")
 
     insertAgent = InsertAgent("sportgen3@404.city", "dupaelka101")
-    insertAgent.start()
+    future3 = insertAgent.start()
+    future3.result()
     insertAgent.web.start(hostname="127.0.0.1", port="10002")
+
+    checkerAgent = CheckerAgent("sportgenchecker@404.city", "dupaelka101")
+    futureChecker = checkerAgent.start()
+    futureChecker.result()
+    CheckerAgent.getJids(checkerAgent, [masterAgent.jid, templateAgent.jid, insertAgent.jid])
+    checkerAgent.web.start(hostname="127.0.0.1", port="10005")
 
     #senderagent4 = SenderAgent("sportgen4@404.city", "dupaelka101")
     #senderagent4.start()
@@ -53,5 +63,6 @@ if __name__ == "__main__":
             insertAgent.stop()
             #senderagent4.stop()
             masterAgent.stop()
+            checkerAgent.stop()
             break
     print("Agents finished")

@@ -26,8 +26,10 @@ class InsertAgent(Agent):
                 await self.send(msg)
                 line_no = line_no + 1
 
+
+
     async def setup(self):
-        #print("INST: InsertAgent started")
+        print("INST: InsertAgent started")
         b = self.InformBehav(period=10)
         self.add_behaviour(b)
 

@@ -11,20 +11,22 @@ class MasterAgent(Agent):
         async def run(self):
 			#print("RECV: RecvBehav running")
             msg = await self.receive(timeout=15) # wait for a message for 10 seconds
-            if msg:
-                print("{}".format(msg.body))
+           # if msg:
+            #    print("{}".format(msg.body))
                 #response = Message(to=str(msg.sender))
                 #response.set_metadata("performative", "inform")
                 #response.body = "OK"
                 #await self.send(response)
-            else:
-                print("RECV: Did not received any message after 10 seconds")
+           # else:
+            #    print("RECV: Did not received any message after 10 seconds")
 
             # stop agent from behaviour
             # await self.agent.stop()
 
+
+
     async def setup(self):
-        #print("RECV: ReceiverAgent started")
+        print("MAST: MasterAgent started")
         b = self.RecvBehav()
         template = Template()
         template.set_metadata("performative", "inform")
