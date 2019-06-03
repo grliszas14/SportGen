@@ -36,7 +36,6 @@ if __name__ == "__main__":
     future3.result()
     insertAgent.web.start(hostname="127.0.0.1", port="10002")
 
-    #CheckerAgent.getJids(checkerAgent, [masterAgent.jid, templateAgent.jid, insertAgent.jid])
 
     #senderagent4 = SenderAgent("sportgen4@404.city", "dupaelka101")
     #senderagent4.start()

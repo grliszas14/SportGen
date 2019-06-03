@@ -12,7 +12,7 @@ from MasterAgent import MasterAgent
 import sys
 
 class CheckerAgent(Agent):
-    jids = [JID]
+    jids = []
     contacts = None
 
     class Behav1(OneShotBehaviour):
@@ -45,10 +45,7 @@ class CheckerAgent(Agent):
             self.presence.on_unavailable = self.on_unavailable
 
             self.presence.set_available()
-            for jid in self.agent.jids:
-                self.presence.subscribe(jid)
-            self.presence.subscribe(self.agent.jids[1])
-            self.presence.subscribe(self.agent.jids[2])
+
 
     class SendBehav2(OneShotBehaviour):
         async def run(self):
@@ -69,23 +66,17 @@ class CheckerAgent(Agent):
         async def run(self):
             msg = await self.receive(timeout=15)
             if msg:
-                print(msg.sender)
-                print(type(msg.sender))
                 self.agent.jids.append(msg.sender)
-                self.agent.presence.subscribe(msg.sender)
                 print("Nowy JID: {}".format(str(msg.sender)))
+                print(self.agent.jids)
             else:
                 print("no new JIDs")
 
-    def getJids(self, jids2):
-        self.jids = jids2
-        self.contacts = self.presence.get_contacts()
-        print(self.contacts[self.jids[1]]["presence"].type_)
-        print(type(self.contacts[self.jids[1]]["presence"].type_))
 
     async def setup(self):
 
         print("SEND: CheckerAgent started")
+        self.contacts = self.presence.get_contacts()
         self.add_behaviour(self.Behav1())
         template = Template()
         template.set_metadata("performative", "inform")
