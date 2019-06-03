@@ -92,9 +92,7 @@ class CheckerAgent(Agent):
                 if msg.sender not in self.agent.jids:
                     self.agent.jids.append(msg.sender)
                     print("Nowy JID: {}".format(str(msg.sender)))
-                    print(self.agent.jids)
-            else:
-                print("no new JIDs")
+
 
     async def setup(self):
         print("CHECK: CheckerAgent started")

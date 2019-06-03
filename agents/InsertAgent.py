@@ -12,7 +12,6 @@ class InsertAgent(Agent):
 
     class InformBehav(PeriodicBehaviour):
         async def run(self):
-            #pass
             global line_no
             msg = Message(to="sportgen2@404.city")
             msg.set_metadata("performative", "inform")
