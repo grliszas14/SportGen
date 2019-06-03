@@ -2,8 +2,8 @@ import random
 import glob
 import os
 from textblob import TextBlob
-from itertools import chain
 import string
+from nltk.corpus import brown
 
 
 class Markov:
@@ -11,6 +11,8 @@ class Markov:
     def __init__(self):
         self.texts = self.read_data('../dataset/bbcsport/football')
         self.texts += self.read_data('../dataset/bnc')
+        self.texts += [' '.join(sent).translate(str.maketrans('', '', string.punctuation)) for sent in
+                                brown.sents(fileids=['ca11', 'ca12', 'ca13', 'ca14', 'ca15'])]
 
     def read_data(self, path):
         all_files = glob.glob(os.path.join(path, "*.txt"))
@@ -20,7 +22,6 @@ class Markov:
             article = TextBlob(
                 ''.join(path.read()).replace("\n", " ").translate(str.maketrans('', '', string.punctuation)))
             contents.append(str(article))
-        # contents = ''.join(chain.from_iterable(contents))
         return contents
 
     def make_rule(self, text, context, rule):

@@ -14,11 +14,11 @@ class Trigram:
     bnc_path = "../dataset/bnc"
     bnc = glob.glob(os.path.join(bnc_path, "*.txt"))
 
-    def __init__(self):
+    def __init__(self, k=0):
         self.sentences = self.load_data(Trigram.bbc)
         self.sentences += self.load_data(Trigram.bnc)
         self.sentences += [list(sent) for sent in brown.sents(fileids=['ca11', 'ca12', 'ca13', 'ca14', 'ca15'])]
-        self.model = self.fit()
+        self.model = self.fit(k)
 
     def load_data(self, files):
         sentences = []
@@ -30,7 +30,7 @@ class Trigram:
 
         return list(chain.from_iterable(sentences))
 
-    def fit(self):
+    def fit(self, k):
         model = defaultdict(lambda: defaultdict(lambda: 0))
         for sentence in self.sentences:
             for w1, w2, w3 in trigrams(sentence, pad_right=True, pad_left=True):
@@ -38,11 +38,12 @@ class Trigram:
 
         for w1_w2 in model:
             total_count = float(sum(model[w1_w2].values()))
+            occurences = len(model[w1_w2])
             for w3 in model[w1_w2]:
-                model[w1_w2][w3] /= total_count
+                model[w1_w2][w3] = (model[w1_w2][w3] + k) / (total_count + k * occurences)
         return model
 
-    def generate(self, min_prob):
+    def generate(self):
         text = [None, None]
         prob = 1.0
         sentence_finished = False
@@ -58,10 +59,9 @@ class Trigram:
                     break
             if text[-2:] == [None, None]:
                 sentence_finished = True
-        print(prob)
         return ' '.join([t for t in text if t])
 
 
 if __name__ == '__main__':
-    trigram = Trigram()
-    print(trigram.generate(min_prob=0.9))
+    trigram = Trigram(k=2)
+    print(trigram.generate())
