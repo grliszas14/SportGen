@@ -17,18 +17,18 @@ class TemplateAgent(Agent):
             d2l = Data2Language()
             message = ''
             response = await self.receive(timeout=60)
-            # parse message
-            team, player, minute, action, action_type = response.body.split(',')
-            try:
-                message = d2l.apply_template(team, player, minute, action, action_type)
-                #print(message)
-            except:
-                print('Cannot make sentence')
-            msg = Message(to="sportgen@404.city")       # Instantiate the message
-            msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
-            msg.body = str(message)						# Set the message content
+            if response:
+                team, player, minute, action, action_type = response.body.split(',')
+                try:
+                    message = d2l.apply_template(team, player, minute, action, action_type)
+                    #print(message)
+                except:
+                    print('Cannot make sentence')
+                msg = Message(to="sportgen@404.city")       # Instantiate the message
+                msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
+                msg.body = str(message)						# Set the message content
 
-            await self.send(msg)
+                await self.send(msg)
 
     class HelloChecker(OneShotBehaviour):
         async def run(self):
