@@ -2,3 +2,13 @@ Liverpool,Salah,6,injury,
 Real Madryt,Kroos,13,penalty,wagging with finger
 Liverpool,Salah,29,substitution,
 Real Madryt,Benzema,51,goal,
+Bayern,Lewandowski,38,goal,penalty kick
+United,Pogba,10,penalty,yellow card
+Real,Kroos,15,pick,
+Barcelona,Messi,18,miss,
+Barcelona,Messi,22,substitution,
+Barcelona,Coutinho,28,loss,
+Real,Bale,73,injury,
+Real,Navas,88,save,
+Real,Ramos,89,pick,
+
